@@ -1,38 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tui.Core.IO.Cryptography;
 
 namespace Tui.Core.IO
 {
     public class TextFileReader:FileReader
     {
-        private string _fileName;
-
         public TextFileReader(string fileName)
         {
-            this._fileName = fileName;
+            this.FileName = fileName;
         }
 
-        public override string FileName
+        public TextFileReader(string fileName,ICryptographyStrategy decodingStrategy)
         {
-            get
-            {
-                return _fileName;
-            }
-        }
+            this.FileName = fileName;
+            this.DecodingStrategy = decodingStrategy;
+        }       
+
 
         public override string Read()
         {
-            FileInfo fileInfo = new FileInfo(this._fileName);
+            FileInfo fileInfo = new FileInfo(this.FileName);
 
             using (var fs = fileInfo.OpenText())
             {
                 return fs.ReadToEnd();
             }                     
         }
-      
+
+        public override string ReadEncoded(Func<string, string> encryptingMethod)
+        {
+            string content = this.Read();
+            return encryptingMethod(content);
+        }
+
+        public override string ReadEncoded()
+        {
+            string content = this.Read();
+            return DecodingStrategy.Decode(content);
+        }
     }
 }

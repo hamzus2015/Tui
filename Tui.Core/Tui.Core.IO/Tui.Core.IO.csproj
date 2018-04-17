@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\ICryptographyStrategy.cs" />
+    <Compile Include="Cryptography\ReverseEncryption.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="TextFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
