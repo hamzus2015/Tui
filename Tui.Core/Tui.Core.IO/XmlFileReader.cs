@@ -1,30 +1,31 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using Tui.Core.IO.Cryptography;
 
 namespace Tui.Core.IO
 {
     public class XmlFileReader:FileReader
-    {
-        private string _fileName;
+    {      
+        
 
         public XmlFileReader(string fileName)
         {
-            this._fileName = fileName;
+            this.FileName = fileName;
         }
 
-        public override string FileName
+        public XmlFileReader(string fileName,ICryptographyStrategy decodingStrategy)
         {
-            get
-            {
-                return _fileName;
-            }
-        }      
+            this.FileName = fileName;
+            this.DecodingStrategy = decodingStrategy;
+
+        }
+       
 
         public override string Read()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(_fileName);
+            doc.Load(FileName);
 
             using (StringWriter strWriter = new StringWriter())
             using (XmlTextWriter xmlTextWriter = new XmlTextWriter(strWriter))
@@ -33,6 +34,18 @@ namespace Tui.Core.IO
                 return strWriter.ToString();
             }
          
+        }
+
+        public override string ReadEncoded(Func<string, string> encryptingMethod)
+        {
+            string content = this.Read();
+            return encryptingMethod(content);
+        }
+
+        public override string ReadEncoded()
+        {
+            string content = this.Read();
+            return DecodingStrategy.Decode(content);
         }
     }
 }
