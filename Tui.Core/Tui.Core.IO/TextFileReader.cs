@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tui.Core.IO
 {
-    public class TextFileReader
+    public class TextFileReader:FileReader
     {
         private string _fileName;
 
@@ -16,13 +16,22 @@ namespace Tui.Core.IO
             this._fileName = fileName;
         }
 
-        public string Read()
+        public override string FileName
         {
-            FileInfo fileInfo = new FileInfo(this._fileName);  
+            get
+            {
+                return _fileName;
+            }
+        }
+
+        public override string Read()
+        {
+            FileInfo fileInfo = new FileInfo(this._fileName);
 
             var fs = fileInfo.OpenText();
 
             return fs.ReadToEnd();
         }
+      
     }
 }
