@@ -24,14 +24,15 @@ namespace Tui.Core.IO
         public override string Read()
         {
             XmlDocument doc = new XmlDocument();
-            StringWriter strWriter = new StringWriter();
-            XmlTextWriter xmlTextWriter = new XmlTextWriter(strWriter);
-
             doc.Load(_fileName);
 
-            doc.WriteTo(xmlTextWriter);
-
-            return strWriter.ToString();
+            using (StringWriter strWriter = new StringWriter())
+            using (XmlTextWriter xmlTextWriter = new XmlTextWriter(strWriter))
+            {  
+                doc.WriteTo(xmlTextWriter);
+                return strWriter.ToString();
+            }
+         
         }
     }
 }

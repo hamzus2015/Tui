@@ -28,9 +28,10 @@ namespace Tui.Core.IO
         {
             FileInfo fileInfo = new FileInfo(this._fileName);
 
-            var fs = fileInfo.OpenText();
-
-            return fs.ReadToEnd();
+            using (var fs = fileInfo.OpenText())
+            {
+                return fs.ReadToEnd();
+            }                     
         }
       
     }
