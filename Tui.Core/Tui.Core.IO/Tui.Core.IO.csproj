@@ -43,10 +43,15 @@
     <Compile Include="Cryptography\ICryptographyStrategy.cs" />
     <Compile Include="Cryptography\ReverseEncryption.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="Security\FilePermission.cs" />
+    <Compile Include="Security\InMemoryPermissionProvider.cs" />
+    <Compile Include="Security\Right.cs" />
+    <Compile Include="Security\IPermissionProvider.cs" />
     <Compile Include="TextFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlFileReader.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
